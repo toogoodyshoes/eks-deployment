@@ -42,11 +42,11 @@ resource "aws_eks_addon" "coredns" {
   addon_version = "v1.11.1-eksbuild.4"
   cluster_name  = "my-eks-deployment"
 
-  depends_on = [ aws_eks_cluster.my-eks-deployment ]
+  depends_on = [ aws_eks_cluster.my-eks-deployment, aws_eks_node_group.my-eks-deployment-1 ]
 }
 
 resource "aws_eks_addon" "kube-proxy" {
-  addon_name    = "kube-porxy"
+  addon_name    = "kube-proxy"
   addon_version = "v1.29.0-eksbuild.1"
   cluster_name  = "my-eks-deployment"
 
