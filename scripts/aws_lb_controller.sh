@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # AWS Account number
-account_id=533267068866
+account_id=533267110570
 cluster_name=$(terraform output cluster-name | tr -d '"')
 
 # Create IAM Policy for AWS Load Balancer Controller

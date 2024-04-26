@@ -1,6 +1,6 @@
 apiVersion: v2
-name: web-app
-description: A Helm chart for Kubernetes
+name: carts
+description: A Helm chart for carts
 
 type: application
 

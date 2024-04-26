@@ -11,4 +11,6 @@ module "eks_cluster" {
 
   private_subnet_1_id = module.network.private-subnet-1.id
   private_subnet_2_id = module.network.private-subnet-2.id
+  public_subnet_1_id = module.network.public-subnet-1.id
+  public_subnet_2_id = module.network.public-subnet-2.id
 }

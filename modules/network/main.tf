@@ -12,7 +12,8 @@ resource "aws_subnet" "public-subnet-1" {
   availability_zone_id = "aps1-az1"
 
   tags = {
-    Name = "Public Subnet 1"
+    Name = "Public Subnet 1",
+    "kubernetes.io/role/elb" = "1"
   }
 }
 
@@ -22,7 +23,8 @@ resource "aws_subnet" "public-subnet-2" {
   availability_zone_id = "aps1-az2"
 
   tags = {
-    Name = "Public Subnet 2"
+    Name = "Public Subnet 2",
+    "kubernetes.io/role/elb" = "1"
   }
 }
 

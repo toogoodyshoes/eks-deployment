@@ -31,7 +31,7 @@ resource "aws_eks_cluster" "my-eks-deployment" {
   }
 
   vpc_config {
-    subnet_ids              = [var.private_subnet_1_id, var.private_subnet_2_id]
+    subnet_ids              = [var.private_subnet_1_id, var.private_subnet_2_id, var.public_subnet_1_id, var.public_subnet_2_id]
     endpoint_private_access = true
     endpoint_public_access  = true
   }
@@ -42,7 +42,7 @@ resource "aws_eks_addon" "coredns" {
   addon_version = "v1.11.1-eksbuild.4"
   cluster_name  = "my-eks-deployment"
 
-  depends_on = [ aws_eks_cluster.my-eks-deployment, aws_eks_node_group.my-eks-deployment-1 ]
+  depends_on = [aws_eks_cluster.my-eks-deployment, aws_eks_node_group.my-eks-deployment-1]
 }
 
 resource "aws_eks_addon" "kube-proxy" {
@@ -50,7 +50,7 @@ resource "aws_eks_addon" "kube-proxy" {
   addon_version = "v1.29.0-eksbuild.1"
   cluster_name  = "my-eks-deployment"
 
-  depends_on = [ aws_eks_cluster.my-eks-deployment ]
+  depends_on = [aws_eks_cluster.my-eks-deployment]
 }
 
 resource "aws_eks_addon" "vpc-cni" {
@@ -58,7 +58,7 @@ resource "aws_eks_addon" "vpc-cni" {
   addon_version = "v1.16.0-eksbuild.1"
   cluster_name  = "my-eks-deployment"
 
-  depends_on = [ aws_eks_cluster.my-eks-deployment ]
+  depends_on = [aws_eks_cluster.my-eks-deployment]
 }
 
 resource "aws_eks_addon" "eks-pod-identity-agent" {
@@ -66,7 +66,7 @@ resource "aws_eks_addon" "eks-pod-identity-agent" {
   addon_version = "v1.2.0-eksbuild.1"
   cluster_name  = "my-eks-deployment"
 
-  depends_on = [ aws_eks_cluster.my-eks-deployment ]
+  depends_on = [aws_eks_cluster.my-eks-deployment]
 }
 
 # EKS Cluster ------------------------------------------------------->
@@ -108,8 +108,8 @@ resource "aws_eks_node_group" "my-eks-deployment-1" {
     min_size     = 2
   }
 
-  ami_type = "AL2_x86_64"
-  disk_size = 20
+  ami_type       = "AL2_x86_64"
+  disk_size      = 20
   instance_types = ["t3.medium"]
 
   depends_on = [
