@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ../application
+
 echo "Uninstalling application.."
 
 # Unisntalling modules
@@ -8,7 +10,7 @@ for ((i = 0; i < ${#modules[@]}; ++i)); do
     module=${modules[i]}
 
     echo "Uninstalling $module.."
-    helm uninstall $module-release-1 ./application/$module/
+    helm uninstall $module-release-1 ./$module/
 done
 
 # Deleting namespaces

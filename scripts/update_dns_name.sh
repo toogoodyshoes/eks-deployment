@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ../infrastructure
+
 cluster_name=$(terraform output cluster-name | tr -d '"')
 
 # Get the dns name
