@@ -13,4 +13,4 @@ done
 
 # Deleting namespaces
 echo -e "Deleting namespaces..."
-helm uninstall namespaces-release-1
+helm uninstall namespaces-release-1 --namespace $module
