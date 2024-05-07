@@ -17,8 +17,8 @@ pipeline{
 
         stage("Build Docker image") {
             steps {
-                sh "sudo docker build -t demo:v1 /dockerfiles/"
-                sh "sudo docker push demo:v1"
+                sh "docker build -t demo:v1 /dockerfiles/"
+                sh "docker push demo:v1"
             }
         }
     }
