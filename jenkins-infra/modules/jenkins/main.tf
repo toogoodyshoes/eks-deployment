@@ -26,15 +26,15 @@ resource "aws_vpc_security_group_ingress_rule" "ssh-access" {
 }
 
 resource "aws_instance" "jenkins-server" {
-  ami             = "ami-0f58b397bc5c1f2e8"
-  instance_type   = "t2.micro"
-  key_name        = "jenkins-server-kp"
-  subnet_id       = var.subnet-id
+  ami                    = "ami-0f58b397bc5c1f2e8"
+  instance_type          = "t2.micro"
+  key_name               = "jenkins-server-kp"
+  subnet_id              = var.subnet-id
   vpc_security_group_ids = [aws_security_group.jenkins-server.id]
-  user_data       = filebase64("${path.module}/jenkins_server.sh")
+  user_data              = filebase64("${path.module}/jenkins_server.sh")
 
   tags = {
-    name = "Jenkins-Server"
+    Name = "Jenkins-Server"
   }
 }
 
@@ -53,10 +53,11 @@ resource "aws_vpc_security_group_egress_rule" "ja-all" {
 
 resource "aws_vpc_security_group_ingress_rule" "ja-ssh-access" {
   security_group_id = aws_security_group.jenkins-agent.id
-  cidr_ipv4         = "0.0.0.0/0"
-  ip_protocol       = "tcp"
-  from_port         = 22
-  to_port           = 22
+  #   cidr_ipv4         = "${aws_instance.jenkins-server.private_ip}/32"
+  cidr_ipv4   = "0.0.0.0/0"
+  ip_protocol = "tcp"
+  from_port   = 22
+  to_port     = 22
 }
 
 resource "aws_vpc_security_group_ingress_rule" "ja-all" {
@@ -66,14 +67,14 @@ resource "aws_vpc_security_group_ingress_rule" "ja-all" {
 }
 
 resource "aws_instance" "jenkins-agent" {
-  ami             = "ami-0f58b397bc5c1f2e8"
-  instance_type   = "t2.micro"
-  key_name        = "jenkins-agent-kp"
-  subnet_id       = var.subnet-id
+  ami                    = "ami-0f58b397bc5c1f2e8"
+  instance_type          = "t2.micro"
+  key_name               = "jenkins-agent-kp"
+  subnet_id              = var.subnet-id
   vpc_security_group_ids = [aws_security_group.jenkins-agent.id]
-  user_data       = filebase64("${path.module}/jenkins_agent.sh")
+  user_data              = filebase64("${path.module}/jenkins_agent.sh")
 
   tags = {
-    name = "Jenkins-Agent"
+    Name = "Jenkins-Agent"
   }
 }
