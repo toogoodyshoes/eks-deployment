@@ -31,7 +31,7 @@ resource "aws_instance" "jenkins-server" {
   key_name               = "jenkins-server-kp"
   subnet_id              = var.subnet-id
   vpc_security_group_ids = [aws_security_group.jenkins-server.id]
-  user_data              = filebase64("${path.module}/jenkins_server.sh")
+  # user_data              = filebase64("${path.module}/jenkins_server.sh")
 
   tags = {
     Name = "Jenkins-Server"
@@ -72,7 +72,7 @@ resource "aws_instance" "jenkins-agent" {
   key_name               = "jenkins-agent-kp"
   subnet_id              = var.subnet-id
   vpc_security_group_ids = [aws_security_group.jenkins-agent.id]
-  user_data              = filebase64("${path.module}/jenkins_agent.sh")
+  # user_data              = filebase64("${path.module}/jenkins_agent.sh")
 
   tags = {
     Name = "Jenkins-Agent"
