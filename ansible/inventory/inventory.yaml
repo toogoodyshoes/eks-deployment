@@ -1,10 +1,10 @@
 jenkins:
   hosts: 
     server:
-      ansible_host: ec2-65-2-38-209.ap-south-1.compute.amazonaws.com
+      ansible_host: ec2-13-201-30-88.ap-south-1.compute.amazonaws.com
       ansible_user: ubuntu
 jenkins_agent:
   hosts:
     agent_one:
-      ansible_host: ec2-3-110-85-152.ap-south-1.compute.amazonaws.com
+      ansible_host: ec2-13-233-90-233.ap-south-1.compute.amazonaws.com
       ansible_user: ubuntu
