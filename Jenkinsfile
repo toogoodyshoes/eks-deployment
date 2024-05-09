@@ -11,7 +11,7 @@ pipeline{
 
         stage("Checkout from SCM") {
             steps {
-                git branch: 'main', credentialsId: 'github', url: 'https://github.com/toogoodyshoes/eks-deployment'
+                git branch: 'revamp', credentialsId: 'github', url: 'https://github.com/toogoodyshoes/eks-deployment'
             }
         }
 
