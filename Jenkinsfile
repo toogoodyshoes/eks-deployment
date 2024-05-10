@@ -15,6 +15,14 @@ pipeline{
             }
         }
 
+        stage("Prepare test suite") {
+            steps {
+                sh "sudo apt update"
+                sh "sudo apt install -y npm"
+                sh "npm install --save-dev vitest"
+            }
+        }
+
         stage("Build Docker image for app") {
             steps {
                 sh "docker build -t resume:v1 ./app/resume/"

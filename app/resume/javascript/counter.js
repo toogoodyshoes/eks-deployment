@@ -5,7 +5,7 @@ const resultElement = document.getElementById('counter');
 function makePostRequest() {
     fetch(url, {
         method: 'POST',
-        headers: {
+        headers: {  
             'Origin': 'https://lekhadenihar.dev',
             'Content-Type': 'application/json'
         },
