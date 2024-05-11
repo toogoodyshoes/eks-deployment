@@ -1,4 +1,4 @@
-const url = 'https://d8eos8dwhj.execute-api.ap-south-1.amazonaws.com/update_count';
+const url = 'http://localhost:8282/counter/update_count';
 
 const resultElement = document.getElementById('counter');
 
@@ -6,7 +6,7 @@ function makePostRequest() {
     fetch(url, {
         method: 'POST',
         headers: {  
-            'Origin': 'https://lekhadenihar.dev',
+            'Origin': 'http://localhost:8181',
             'Content-Type': 'application/json'
         },
     })

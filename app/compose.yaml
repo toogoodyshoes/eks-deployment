@@ -1,0 +1,30 @@
+services:
+  resume:
+    image: resume:v1
+    restart: always
+    expose:
+      - 8181
+    ports:
+      - 8181:8181
+    networks:
+      - app
+  api:
+    image: api:v1
+    restart: always
+    networks:
+      - app
+    expose:
+      - 8282
+    ports:
+      - 8282:8000
+  mongo:
+    image: mongo:jammy
+    restart: always
+    networks:
+      - app
+    expose:
+      - 27017
+    ports:
+      - 27017:27017
+networks:
+  app:
