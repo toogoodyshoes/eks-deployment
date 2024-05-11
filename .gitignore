@@ -38,3 +38,4 @@ node_modules
 # Python env
 .venv
 __pycache__
+.idea
