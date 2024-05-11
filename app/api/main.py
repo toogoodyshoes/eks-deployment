@@ -6,7 +6,7 @@ from routers import counter
 app = FastAPI()
 
 origins = [
-    "http://localhost:8181"
+    "*"
 ]
 
 app.add_middleware(
