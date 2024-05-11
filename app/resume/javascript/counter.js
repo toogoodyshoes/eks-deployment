@@ -1,4 +1,4 @@
-const url = 'http://resume.api.svc.cluster.local:8282/counter/update_count';
+const url = 'http://resume.app.svc.cluster.local:8282/counter/update_count';
 
 const resultElement = document.getElementById('counter');
 
