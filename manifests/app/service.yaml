@@ -5,7 +5,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: resume
+    app: api
   ports:
   - port: 8282
     targetPort: 8000
