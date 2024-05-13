@@ -1,18 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api
+  name: {{ .Values.app }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/created-by: nihar
 spec:
   selector:
     matchLabels:
-      app: api
+      app: {{ .Values.app }}
   template:
     metadata:
       labels:
-        app: api
+        app: {{ .Values.app }}
     spec:
       containers:
-      - name: api
+      - name: {{ .Values.app }}
         image: toogoodyshoes/api:v1
         resources:
           limits:

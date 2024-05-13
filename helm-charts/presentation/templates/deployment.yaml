@@ -1,18 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: resume
+  name: {{ .Values.app }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/created-by: nihar
 spec:
   selector:
     matchLabels:
-      app: resume
+      app: {{ .Values.app }}
   template:
     metadata:
       labels:
-        app: resume
+        app: {{ .Values.app }}
     spec:
       containers:
-      - name: myapp
+      - name: {{ .Values.app }}
         image: toogoodyshoes/resume:v1
         imagePullPolicy: Always
         resources:
