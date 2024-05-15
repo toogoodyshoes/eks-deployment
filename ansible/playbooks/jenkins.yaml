@@ -1,0 +1,136 @@
+- name: Configure jenkins server
+  hosts: jenkins
+  become: true
+  tasks:
+    - name: Update package cache
+      apt:
+        update_cache: yes
+    
+    - name: Adoptium repository setup
+      block:
+        - name: Add Adoptium repository key
+          ansible.builtin.get_url:
+            url: https://packages.adoptium.net/artifactory/api/gpg/key/public
+            dest: /etc/apt/keyrings/adoptium.asc
+        
+        - name: Add Adoptium repository
+          ansible.builtin.apt_repository:
+            repo: "deb [signed-by=/etc/apt/keyrings/adoptium.asc] https://packages.adoptium.net/artifactory/deb {{ ansible_distribution_release }} main"
+            state: present
+
+    - name: Install Java
+      apt:
+        name: temurin-17-jdk
+        state: present
+
+    - name: Verify Java installation
+      command: java --version
+      register: java_version_output
+
+    - debug:
+        msg: "{{ java_version_output.stdout }}"
+
+    - name: Jenkins respository setup
+      block:
+        - name: Add Jenkins repository key
+          ansible.builtin.get_url:
+            url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+            dest: /usr/share/keyrings/jenkins-keyring.asc
+        
+        - name: Add jenkins respository
+          ansible.builtin.apt_repository:
+            repo: "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/"
+            state: present
+
+    - name: Install Jenkins
+      apt:
+        name: jenkins
+        state: present
+
+    - name: Start Jenkins service
+      service:
+        name: jenkins
+        state: started
+
+# Jenkins agent
+- name: Configure jenkins agent
+  hosts: jenkins_agent
+  become: true
+  tasks:
+  - name: Update package cache
+    apt:
+      update_cache: yes
+
+  - name: Create a new user
+    user:
+      name: jenkins
+      state: present
+      shell: /bin/bash
+      createhome: yes
+
+  - name: Grant sudo permissions to the new user
+    lineinfile:
+      dest: /etc/sudoers
+      line: 'jenkins ALL=(ALL) NOPASSWD:ALL'
+      validate: 'visudo -cf %s'
+      state: present
+
+  - name: Adoptium repository setup
+    block:
+      - name: Add Adoptium repository key
+        ansible.builtin.get_url:
+          url: https://packages.adoptium.net/artifactory/api/gpg/key/public
+          dest: /etc/apt/keyrings/adoptium.asc
+        
+      - name: Add Adoptium repository
+        ansible.builtin.apt_repository:
+          repo: "deb [signed-by=/etc/apt/keyrings/adoptium.asc] https://packages.adoptium.net/artifactory/deb {{ ansible_distribution_release }} main"
+          state: present
+        
+  - name: Install Java
+    apt:
+      name: temurin-17-jdk
+      state: present
+
+  - name: Verify Java installation
+    command: java --version
+    register: java_version_output
+
+  - debug:
+      msg: "{{ java_version_output.stdout }}"
+
+  - name: Install prerequisite packages for Docker
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+
+  - name: Add Docker GPG key
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+
+  - name: Add Docker repository
+    apt_repository:
+      repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+      state: present
+
+  - name: Install Docker packages
+    apt:
+      name: 
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-buildx-plugin
+        - docker-compose-plugin
+      state: present
+
+  - name: Add jenkins user to docker group
+    user:
+      name: jenkins
+      groups: docker
+
