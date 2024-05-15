@@ -2,9 +2,8 @@
 3-tier web application deployed on EKS cluster, following the DevOps lifecycle.
 
 ## Table of Contents
-- [EKS DEPLOYMENT](#eks-deployment)
+- [DEVOPS PIPELINE](#devops-pipeline)
   - [Description](#description)
-  - [Codebase](#codebase)
 
 ## Description
 This project employes containerization, CI/CD pipelines and Infrastrcture as a Code. The process includes automated testing and building, configuration management and monitoring.
